@@ -1,4 +1,4 @@
 # twiter
 
 
-sa
+1. go mod init
