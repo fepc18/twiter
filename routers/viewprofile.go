@@ -18,10 +18,18 @@ func ViewProfile(w http.ResponseWriter, r *http.Request) {
 	}
 	profile, err := bd.FindProfile(ID)
 	if err != nil {
-		http.Error(w, "An error occurred while trying to find the record "+err.Error(), 400)
+
+		//if err == mongo.ErrNoDocuments {
+		if err.Error() == "mongo: no documents in result" {
+			//log.(err.Error())
+			http.Error(w, "User not found", http.StatusNotFound)
+			return
+		}
+
+		http.Error(w, "An error occurred while trying to find the record "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("context-type", "application/json")
-	w.WriteHeader(http.StatusCreated)
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(profile)
 }

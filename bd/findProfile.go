@@ -12,7 +12,8 @@ import (
 
 // FindProfile finds a profile in the database
 func FindProfile(Id string) (models.User, error) {
-	db := MongoCN.Database("twiter")
+	fmt.Println(Id)
+	db := MongoCN.Database("twitter")
 	col := db.Collection("users")
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
@@ -22,6 +23,7 @@ func FindProfile(Id string) (models.User, error) {
 		"_id": objID,
 	}
 	err := col.FindOne(ctx, condition).Decode(&profile)
+
 	profile.Password = ""
 	if err != nil {
 		fmt.Println("Profile not found " + err.Error())
