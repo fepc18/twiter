@@ -22,6 +22,8 @@ func Handlers() {
 	router.HandleFunc("/readtweets", middleware.CheckDB(middleware.ValidateJWT(routers.ReadTweets))).Methods("GET")
 	router.HandleFunc("/deletetweet", middleware.CheckDB(middleware.ValidateJWT(routers.DeleteTweet))).Methods("DELETE")
 
+	router.HandleFunc("/uploadavatar", middleware.CheckDB(middleware.ValidateJWT(routers.UploadAvatar))).Methods("POST")
+
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
 		PORT = "8080"
