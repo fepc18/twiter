@@ -27,6 +27,9 @@ func Handlers() {
 
 	router.HandleFunc("/getavatar", middleware.CheckDB(routers.GetAvatar)).Methods("GET") // no necesita validar el token
 	router.HandleFunc("/getbanner", middleware.CheckDB(routers.GetBanner)).Methods("GET")
+
+	router.HandleFunc("/saverelationship", middleware.CheckDB(middleware.ValidateJWT(routers.SaveRelationship))).Methods("POST")
+
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
 		PORT = "8080"
