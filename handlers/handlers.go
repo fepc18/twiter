@@ -23,7 +23,10 @@ func Handlers() {
 	router.HandleFunc("/deletetweet", middleware.CheckDB(middleware.ValidateJWT(routers.DeleteTweet))).Methods("DELETE")
 
 	router.HandleFunc("/uploadavatar", middleware.CheckDB(middleware.ValidateJWT(routers.UploadAvatar))).Methods("POST")
+	router.HandleFunc("/uploadbanner", middleware.CheckDB(middleware.ValidateJWT(routers.UploadBanner))).Methods("POST")
 
+	router.HandleFunc("/getavatar", middleware.CheckDB(routers.GetAvatar)).Methods("GET") // no necesita validar el token
+	router.HandleFunc("/getbanner", middleware.CheckDB(routers.GetBanner)).Methods("GET")
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
 		PORT = "8080"
